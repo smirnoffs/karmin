@@ -41,6 +41,11 @@ CACHES = {
     }
 }
 
+DATABASES = {
+    'default': env.db('DATABASE_URL', default='postgresql://127.0.0.1:5432/karmin'),
+}
+DATABASES['default']['USER'] = 'karmin'
+
 # django-debug-toolbar
 # ------------------------------------------------------------------------------
 MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware', ]
