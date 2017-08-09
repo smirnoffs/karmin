@@ -4,8 +4,8 @@ from django.db import models, IntegrityError
 
 
 def maximum_10_symbols(value):
-    if value > 10 ** 10 - 1:
-        raise ValidationError('Код {} довший ніж 10 цифр'.format(value))
+    if value > 10 ** 12 - 1:
+        raise ValidationError('Код {} довший ніж 12 цифр'.format(value))
 
 
 CARD_VALUES = (
