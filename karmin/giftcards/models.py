@@ -1,4 +1,5 @@
-from django.contrib.auth import get_user
+import random
+
 from django.core.exceptions import ValidationError
 from django.db import models, IntegrityError
 
@@ -32,6 +33,22 @@ class GiftCard(models.Model):
 
     def __str__(self):
         return "Карта {0.code} на {0.value}₴. Створена {0.created_by} {0.created_at:%d.%m.%Y %H:%M}".format(self)
+
+    @classmethod
+    def generate_code(cls):
+        """Generates a new code for a gift cart, recursively repeats the generation if
+        generated code already exists in the database"""
+        code_exists = True
+        while code_exists:
+            code = random.randint(10 ** 11, 10 ** 12)
+            if not cls.objects.filter(code=code).exists():
+                code_exists = False
+        return code
+
+    def save(self, *args, **kwargs):
+        if self.sale_set.count():
+            raise Exception('Модифікація сертифікатів, що мають продажі не дозволені')
+        super(GiftCard, self).save(*args, **kwargs)
 
 
 class Sale(models.Model):
