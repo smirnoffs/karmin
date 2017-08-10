@@ -33,8 +33,7 @@ class GitCardGeneration(APIView):
         return self.generate(request)
 
     def generate(self, request):
-        """Generates a new code for a gift cart, recursively repeats the generation if
-                    generated code already exists in the database"""
+        """Generates new gift cards, number_of_cards and value should be provided in POST request """
         try:
             number_of_cards = request.data['number_of_cards']
             value = request.data['value']
